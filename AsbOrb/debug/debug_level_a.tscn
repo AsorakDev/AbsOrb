@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://bv0hvwi5bbxf7"]
+
+[ext_resource type="PackedScene" uid="uid://bqvl1rjcla7gd" path="res://player/player.tscn" id="1_6mg17"]
+[ext_resource type="PackedScene" uid="uid://0pam5dho0wv1" path="res://debug/debug_enemy_a.tscn" id="2_v4xdw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v6oip"]
+size = Vector2(120, 2160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_73j0x"]
+size = Vector2(2050, 120)
+
+[node name="DebugLevelA" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-60, 720)
+shape = SubResource("RectangleShape2D_v6oip")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(960, -60.0008)
+rotation = 1.57079
+shape = SubResource("RectangleShape2D_v6oip")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1980, 720)
+shape = SubResource("RectangleShape2D_v6oip")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1015, 1380)
+shape = SubResource("RectangleShape2D_73j0x")
+
+[node name="Player" parent="." instance=ExtResource("1_6mg17")]
+position = Vector2(540, 600)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(1.5, 1.5)
+process_callback = 0
+limit_bottom = 1500
+position_smoothing_enabled = true
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(540, 570)
+
+[node name="DebugEnemyA" parent="." instance=ExtResource("2_v4xdw")]
+position = Vector2(330, 870)
+rotation = -3.14159

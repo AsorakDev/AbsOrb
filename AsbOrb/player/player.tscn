@@ -1,0 +1,95 @@
+[gd_scene load_steps=17 format=3 uid="uid://bqvl1rjcla7gd"]
+
+[ext_resource type="Texture2D" uid="uid://ch2if161uyos5" path="res://graphics/Orb.png" id="1_5qo4m"]
+[ext_resource type="Script" path="res://player/player.gd" id="1_s6xks"]
+[ext_resource type="Script" path="res://FSM/FiniteStateMachine.gd" id="3_ifnkb"]
+[ext_resource type="Script" path="res://FSM/PlayerStates/Idle.gd" id="4_7566m"]
+[ext_resource type="Script" path="res://FSM/PlayerStates/Launch.gd" id="5_xwlqw"]
+[ext_resource type="Script" path="res://FSM/PlayerStates/Roll.gd" id="5_ye5es"]
+[ext_resource type="Script" path="res://FSM/PlayerStates/Stance.gd" id="6_lm2pq"]
+[ext_resource type="Script" path="res://FSM/PlayerStates/Attack.gd" id="7_iifo5"]
+[ext_resource type="Script" path="res://FSM/PlayerStates/Grab.gd" id="8_gw6d8"]
+[ext_resource type="Script" path="res://FSM/PlayerStates/Pull.gd" id="9_x3hq4"]
+[ext_resource type="Script" path="res://FSM/PlayerStates/Mark.gd" id="10_ax0f3"]
+[ext_resource type="Script" path="res://FSM/PlayerStates/Absorb.gd" id="11_3xxhm"]
+[ext_resource type="PackedScene" uid="uid://bkv3g8i0u0sst" path="res://UI/hud.tscn" id="12_3lc7w"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o1mjb"]
+radius = 30.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_codvs"]
+radius = 30.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_kayjj"]
+font_size = 60
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 6
+script = ExtResource("1_s6xks")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(-3.62396e-05, -3.8147e-06)
+scale = Vector2(0.0937498, 0.09375)
+texture = ExtResource("1_5qo4m")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_o1mjb")
+
+[node name="HurtArea" type="Area2D" parent="."]
+visible = false
+
+[node name="HurtBox" type="CollisionShape2D" parent="HurtArea"]
+shape = SubResource("CircleShape2D_codvs")
+
+[node name="RayCast" type="RayCast2D" parent="."]
+collision_mask = 6
+collide_with_areas = true
+
+[node name="FSM" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_ifnkb")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="FSM"]
+script = ExtResource("4_7566m")
+
+[node name="Roll" type="Node" parent="FSM"]
+script = ExtResource("5_ye5es")
+
+[node name="Launch" type="Node" parent="FSM"]
+script = ExtResource("5_xwlqw")
+
+[node name="Stance" type="Node" parent="FSM"]
+script = ExtResource("6_lm2pq")
+
+[node name="Attack" type="Node" parent="FSM"]
+script = ExtResource("7_iifo5")
+
+[node name="Grab" type="Node" parent="FSM"]
+script = ExtResource("8_gw6d8")
+
+[node name="Pull" type="Node" parent="FSM"]
+script = ExtResource("9_x3hq4")
+
+[node name="Mark" type="Node" parent="FSM"]
+script = ExtResource("10_ax0f3")
+
+[node name="Absorb" type="Node" parent="FSM"]
+script = ExtResource("11_3xxhm")
+
+[node name="LimbManager" type="Node" parent="."]
+
+[node name="HUD" parent="." instance=ExtResource("12_3lc7w")]
+
+[node name="Label" type="Label" parent="HUD"]
+offset_right = 40.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_kayjj")
+
+[node name="RollTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="RollTimer" to="FSM/Roll" method="_on_roll_timer_timeout"]

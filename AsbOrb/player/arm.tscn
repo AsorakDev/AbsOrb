@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://b1epye1tqbf3p"]
+
+[ext_resource type="Texture2D" uid="uid://bjqq2o7ro2lq0" path="res://graphics/icon.svg" id="1_iflpf"]
+[ext_resource type="Script" path="res://player/arm.gd" id="1_nm46m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cmf76"]
+size = Vector2(30, 30)
+
+[node name="Arm" type="Node2D"]
+script = ExtResource("1_nm46m")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(-3.8147e-06, -3.8147e-06)
+scale = Vector2(0.234375, 0.234375)
+texture = ExtResource("1_iflpf")
+
+[node name="HitArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+
+[node name="HitBox" type="CollisionShape2D" parent="HitArea"]
+shape = SubResource("RectangleShape2D_cmf76")
+
+[connection signal="area_entered" from="HitArea" to="." method="_on_hit_area_area_entered"]
+[connection signal="body_entered" from="HitArea" to="." method="_on_hit_area_body_entered"]

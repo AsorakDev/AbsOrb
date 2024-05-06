@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnc1tkrxt7fdi"]
+
+[ext_resource type="Script" path="res://enemy/TriOrb.gd" id="1_ibuq5"]
+[ext_resource type="Script" path="res://FSM/FiniteStateMachine.gd" id="2_ht532"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hicnb"]
+radius = 60.0
+
+[node name="TriOrb" type="CharacterBody2D"]
+script = ExtResource("1_ibuq5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_hicnb")
+
+[node name="FSM" type="Node" parent="."]
+script = ExtResource("2_ht532")
+
+[node name="Standby" type="Node" parent="FSM"]
+
+[node name="Node2" type="Node" parent="FSM"]
+
+[node name="Follow" type="Node" parent="FSM"]
+
+[node name="Reposition" type="Node" parent="FSM"]
+
+[node name="Shoot" type="Node" parent="FSM"]

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://jde3vh8iid78"]
+
+[ext_resource type="Texture2D" uid="uid://beslq2viakiff" path="res://graphics/Spike.png" id="1_skw8c"]
+[ext_resource type="Script" path="res://player/stance_spike.gd" id="2_rrwct"]
+
+[node name="StanceSpike" type="Marker2D"]
+scale = Vector2(0.09375, 0.09375)
+script = ExtResource("2_rrwct")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(480, 0)
+scale = Vector2(1.5, 1)
+texture = ExtResource("1_skw8c")

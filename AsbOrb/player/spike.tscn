@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://blda7ja50qcru"]
+
+[ext_resource type="Script" path="res://player/spike.gd" id="1_6aqpa"]
+[ext_resource type="Texture2D" uid="uid://beslq2viakiff" path="res://graphics/Spike.png" id="2_goajx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jyhxc"]
+size = Vector2(60, 60)
+
+[node name="Spike" type="Node2D"]
+script = ExtResource("1_6aqpa")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(-9.53674e-07, 0)
+scale = Vector2(0.046875, 0.09375)
+texture = ExtResource("2_goajx")
+
+[node name="HitArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="HitBox" type="CollisionShape2D" parent="HitArea"]
+position = Vector2(-15, 0)
+shape = SubResource("RectangleShape2D_jyhxc")
+
+[node name="Cooldown" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.05
+one_shot = true
+
+[connection signal="area_entered" from="HitArea" to="." method="_on_hit_area_area_entered"]
